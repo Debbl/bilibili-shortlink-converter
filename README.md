@@ -2,8 +2,8 @@
 
 # API
 
-[https://api.bilibili.com/x/share/click](https://api.bilibili.com/x/share/click)
-
+- URL
+  - https://api.bilibili.com/x/share/click
 - Method
   - POST
 - Params
@@ -21,3 +21,17 @@
 ```
 
 > this oid parameter is the URL that needs to be converted.
+
+- Response
+
+```json
+{
+  "code": 0,
+  "message": "0",
+  "ttl": 1,
+  "data": {
+    "content": "https://b23.tv/kg14Yz8",
+    "count": 0
+  }
+}
+```
