@@ -44,6 +44,7 @@ export default function Home() {
     <main className="flex justify-center">
       <div className="flex flex-col gap-y-3">
         <h1 className="p-6 text-center text-2xl">获取B站短链接</h1>
+
         <div className="flex gap-x-2">
           <div className="relative">
             <input
