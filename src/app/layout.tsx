@@ -1,8 +1,11 @@
+import type { Metadata } from "next";
+import NavList from "~/components/NavList";
 import "./globals.css";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "获取B站短链接",
   description: "获取B站短链接",
+  icons: "/favicon.svg",
 };
 
 export default function RootLayout({
@@ -12,7 +15,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-CN">
-      <body>{children}</body>
+      <body>
+        <NavList />
+        <div>{children}</div>
+      </body>
     </html>
   );
 }
