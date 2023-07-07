@@ -2,7 +2,7 @@
 "use client";
 import { Icon } from "@iconify/react";
 import closeIcon from "@iconify/icons-carbon/close";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 const GetCover = () => {
   const [videoUrl, setVideoUrl] = useState(
@@ -15,7 +15,7 @@ const GetCover = () => {
   });
 
   // get BV* from vid by re
-  const vid = /\/(BV\w+)\\?/.exec(videoUrl)?.[1];
+  const vid = useMemo(() => /\/(BV\w+)\\?/.exec(videoUrl)?.[1], [videoUrl]);
 
   const handleClick = () => {
     fetch("/api/get-cover", {
@@ -53,7 +53,7 @@ const GetCover = () => {
           <button
             onClick={() => handleClick()}
             disabled={!videoUrl}
-            className="rounded-md border bg-blue-400 px-2 text-gray-200 active:scale-[.97] active:opacity-[.97] disabled:scale-100 disabled:bg-gray-500 disabled:opacity-100"
+            className="btn"
           >
             获取封面
           </button>

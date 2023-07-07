@@ -62,11 +62,7 @@ export default function Home() {
               />
             )}
           </div>
-          <button
-            onClick={() => handleClick()}
-            disabled={!url}
-            className="rounded-md border bg-blue-400 px-2 text-gray-200 active:scale-[.97] active:opacity-[.97] disabled:scale-100 disabled:bg-gray-500 disabled:opacity-100"
-          >
+          <button onClick={() => handleClick()} disabled={!url} className="btn">
             获取短链接
           </button>
         </div>
