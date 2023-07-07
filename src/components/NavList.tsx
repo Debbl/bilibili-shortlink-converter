@@ -1,4 +1,6 @@
+"use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const NAV_LIST = [
   {
@@ -12,13 +14,17 @@ const NAV_LIST = [
 ];
 
 const NavList: React.FC = () => {
+  const pathname = usePathname();
+
   return (
     <div>
       <div className="flex justify-evenly opacity-30 transition-opacity hover:opacity-100">
         {NAV_LIST.map((item) => (
           <Link
             key={item.path}
-            className="flex-1 border border-l-0 text-center"
+            className={`flex-1 border border-l-0 text-center ${
+              pathname === item.path && "bg-yellow-200"
+            }`}
             href={item.path}
           >
             {item.name}
