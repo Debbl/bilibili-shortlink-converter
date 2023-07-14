@@ -32,6 +32,7 @@ export async function POST(request: NextRequest) {
   params.append("oid", url);
   const res = await fetch(`${BILIBILI_API}?${params.toString()}`, {
     method: "POST",
+    cache: "force-cache",
   });
   const data = (await res.json()) as BilibiliResponse;
 
