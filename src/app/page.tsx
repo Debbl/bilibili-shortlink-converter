@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Icon } from "@iconify/react";
-import { getShortLink } from "./getShortLink";
+import { getShortLinkAction } from "~/actions/getShortLinkAction";
 import { checkMarkIcon, closeIcon, copyLinkIcon } from "~/assets/icons";
 
 export default function Home() {
@@ -12,28 +12,17 @@ export default function Home() {
   const [isCopy, setIsCopy] = useState(false);
 
   const handleClick = async () => {
-    const res = await getShortLink(url);
-    const shortUrl = res.data.content;
-    if (!shortUrl) {
+    const res = await getShortLinkAction(url);
+
+    const shortUrlRes = res?.data.content;
+
+    if (!shortUrlRes) {
       // eslint-disable-next-line no-alert
       alert("url为空或解析错误");
       return;
     }
-    setShortUrl(res.data.content);
-    // fetch("/api/get-short-link", {
-    //   method: "POST",
-    //   body: JSON.stringify({ url }),
-    // })
-    //   .then((res) => res.json())
-    //   .then((d) => {
-    //     const shortUrl = d.data.content;
-    //     if (!shortUrl) {
-    //       // eslint-disable-next-line no-alert
-    //       alert("url为空或解析错误");
-    //       return;
-    //     }
-    //     setShortUrl(d.data.content);
-    //   });
+
+    setShortUrl(shortUrlRes);
   };
 
   const handleCopyClick = () => {

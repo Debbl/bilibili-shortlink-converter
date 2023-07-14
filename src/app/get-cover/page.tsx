@@ -2,6 +2,7 @@
 "use client";
 import { Icon } from "@iconify/react";
 import { useMemo, useState } from "react";
+import { getCoverAction } from "~/actions/getCoverAction";
 import { closeIcon } from "~/assets/icons";
 
 const GetCover = () => {
@@ -18,13 +19,9 @@ const GetCover = () => {
   const vid = useMemo(() => /\/(BV\w+)\\?/.exec(videoUrl)?.[1], [videoUrl]);
 
   const handleClick = () => {
-    fetch("/api/get-cover", {
-      method: "POST",
-      body: JSON.stringify({ vid }),
-    })
-      .then((res) => res.json())
-      .then((d) => {
-        setVideoInfo({ ...videoInfo, ...d.data });
+    vid &&
+      getCoverAction(vid).then((d) => {
+        d && setVideoInfo({ ...videoInfo, ...d.data });
       });
   };
 
@@ -66,7 +63,7 @@ const GetCover = () => {
         </div>
 
         <div className="relative mt-8 w-[32rem] self-center overflow-hidden">
-          {videoInfo && (
+          {videoInfo.img && (
             <div className="flex flex-col gap-y-3">
               <div>{videoInfo.title}</div>
               <img src={videoInfo.img} alt="" />

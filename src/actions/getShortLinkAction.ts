@@ -1,12 +1,16 @@
 "use server";
 
+interface ShortUrlResponse {
+  code: number;
+  message: string;
+  ttl: number;
+  data: { content?: string; count: number };
+}
+
 const BILIBILI_API = "https://api.bilibili.com/x/share/click";
 
-export async function getShortLink(url: string) {
-  if (!url)
-    return new Response("No url", {
-      status: 400,
-    });
+async function getShortLinkAction(url: string) {
+  if (!url) return;
 
   const params = new URLSearchParams({
     build: "6180000",
@@ -18,9 +22,13 @@ export async function getShortLink(url: string) {
   });
 
   params.append("oid", url);
-  const res = await fetch(`${BILIBILI_API}?${params.toString()}`, {
+
+  const res = (await fetch(`${BILIBILI_API}?${params.toString()}`, {
     method: "POST",
     cache: "force-cache",
-  }).then((res) => res.json());
+  }).then((res) => res.json())) as ShortUrlResponse;
+
   return res;
 }
+
+export { getShortLinkAction };
