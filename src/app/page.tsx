@@ -1,9 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Icon } from "@iconify/react";
-import copyLinkIcon from "@iconify/icons-carbon/copy-link";
-import checkmarkIcon from "@iconify/icons-carbon/checkmark";
-import closeIcon from "@iconify/icons-carbon/close";
+import { checkMarkIcon, closeIcon, copyLinkIcon } from "~/assets/icons";
 
 export default function Home() {
   const [url, setUrl] = useState(
@@ -81,7 +79,7 @@ export default function Home() {
               <button onClick={() => handleCopyClick()}>
                 <Icon
                   className="h-6 w-6"
-                  icon={isCopy ? checkmarkIcon : copyLinkIcon}
+                  icon={isCopy ? checkMarkIcon : copyLinkIcon}
                 />
               </button>
             </div>

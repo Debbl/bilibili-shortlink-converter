@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { Icon } from "@iconify/react";
-import closeIcon from "@iconify/icons-carbon/close";
 import { useMemo, useState } from "react";
+import { closeIcon } from "~/assets/icons";
 
 const GetCover = () => {
   const [videoUrl, setVideoUrl] = useState(
