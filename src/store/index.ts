@@ -52,31 +52,29 @@ const useGetShortUrlStore = create<GetShortUrlStore>()((set, get) => ({
   },
 }));
 
-const useGetCoverStore = create<GetCoverStore>()((set, get) => {
-  return {
-    getVid: () => /\/(BV\w+)\\?/.exec(get()?.videoUrl)?.[1],
-    videoUrl:
-      "https://www.bilibili.com/video/BV16X4y1H7LR/?vd_source=846e45e6e150f0469fe98e948cf11679",
-    videoInfo: {
-      pic: "",
-      title: "",
-      img: "",
-    },
-    setVideoUrl: (videoUrl: string) => set({ videoUrl }),
-    setVideoInfo: (videoInfo: { pic: string; title: string; img: string }) =>
-      set({ videoInfo }),
-    getCover: () => {
-      const vid = get().getVid();
-      vid &&
-        getCoverAction(vid).then((d) => {
-          if (!d) {
-            // eslint-disable-next-line no-alert
-            alert("解析错误！");
-            set({ videoInfo: { pic: "", title: "", img: "" } });
-          } else set({ videoInfo: { ...d.data } });
-        });
-    },
-  };
-});
+const useGetCoverStore = create<GetCoverStore>()((set, get) => ({
+  getVid: () => /\/(BV\w+)\\?/.exec(get()?.videoUrl)?.[1],
+  videoUrl:
+    "https://www.bilibili.com/video/BV16X4y1H7LR/?vd_source=846e45e6e150f0469fe98e948cf11679",
+  videoInfo: {
+    pic: "",
+    title: "",
+    img: "",
+  },
+  setVideoUrl: (videoUrl: string) => set({ videoUrl }),
+  setVideoInfo: (videoInfo: { pic: string; title: string; img: string }) =>
+    set({ videoInfo }),
+  getCover: () => {
+    const vid = get().getVid();
+    vid &&
+      getCoverAction(vid).then((d) => {
+        if (!d) {
+          // eslint-disable-next-line no-alert
+          alert("解析错误！");
+          set({ videoInfo: { pic: "", title: "", img: "" } });
+        } else set({ videoInfo: { ...d.data } });
+      });
+  },
+}));
 
 export { useGetShortUrlStore, useGetCoverStore };
