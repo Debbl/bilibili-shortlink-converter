@@ -29,6 +29,7 @@ export async function POST(request: NextRequest) {
     share_id: "public.webview.0.0.pv",
     share_mode: "3",
   });
+  console.log(url)
   params.append("oid", url);
   const res = await fetch(`${BILIBILI_API}?${params.toString()}`, {
     method: "POST",
