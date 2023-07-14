@@ -13,7 +13,8 @@
     "next": "13.4.8",
     "node-base64-image": "^2.0.5",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "zustand": "^4.3.9"
   },
   "devDependencies": {
     "@debbl/eslint-config-prettier": "^0.0.45",

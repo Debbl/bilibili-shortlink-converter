@@ -1,29 +1,18 @@
 "use client";
-import { useState } from "react";
 import { Icon } from "@iconify/react";
-import { getShortLinkAction } from "~/actions/getShortLinkAction";
 import { checkMarkIcon, closeIcon, copyLinkIcon } from "~/assets/icons";
+import { useGetShortUrlStore } from "~/store";
 
 export default function Home() {
-  const [url, setUrl] = useState(
-    "https://space.bilibili.com/174865648?spm_id_from=333.1007.0.0"
-  );
-  const [shortUrl, setShortUrl] = useState("");
-  const [isCopy, setIsCopy] = useState(false);
-
-  const handleClick = async () => {
-    const res = await getShortLinkAction(url);
-
-    const shortUrlRes = res?.data.content;
-
-    if (!shortUrlRes) {
-      // eslint-disable-next-line no-alert
-      alert("url为空或解析错误");
-      return;
-    }
-
-    setShortUrl(shortUrlRes);
-  };
+  const [{ url, shortUrl, isCopy }, { setUrl, setIsCopy, getShortUrl }] =
+    useGetShortUrlStore((s) => [
+      { url: s.url, shortUrl: s.shortUrl, isCopy: s.isCopy },
+      {
+        setUrl: s.setUrl,
+        setIsCopy: s.setIsCopy,
+        getShortUrl: s.getShortUrl,
+      },
+    ]);
 
   const handleCopyClick = () => {
     shortUrl && setIsCopy(true);
@@ -58,7 +47,7 @@ export default function Home() {
               />
             )}
           </div>
-          <button onClick={() => handleClick()} disabled={!url} className="btn">
+          <button onClick={() => getShortUrl()} disabled={!url} className="btn">
             获取短链接
           </button>
         </div>
