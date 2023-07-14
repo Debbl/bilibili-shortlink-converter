@@ -7,18 +7,19 @@ const BILI_API_VIDEO_INFO = "https://api.bilibili.com/x/web-interface/view";
 async function getCoverAction(vid: string) {
   if (!vid) return;
 
-  let res;
+  let apiUrl;
   if (vid.startsWith("BV")) {
-    res = await fetch(`${BILI_API_VIDEO_INFO}?bvid=${vid}`, {
-      cache: "force-cache",
-    });
+    apiUrl = `${BILI_API_VIDEO_INFO}?bvid=${vid}`;
   } else {
-    res = await fetch(`${BILI_API_VIDEO_INFO}?aid=${vid}`, {
-      cache: "force-cache",
-    });
+    apiUrl = `${BILI_API_VIDEO_INFO}?aid=${vid}`;
   }
 
+  const res = await fetch(apiUrl, {
+    cache: "force-cache",
+  });
+
   const data = await res.json();
+  if (data.code !== 0) return;
 
   // get base64 from pic
   const pic = data.data.pic as string;

@@ -21,7 +21,11 @@ const GetCover = () => {
   const handleClick = () => {
     vid &&
       getCoverAction(vid).then((d) => {
-        d && setVideoInfo({ ...videoInfo, ...d.data });
+        if (!d) {
+          // eslint-disable-next-line no-alert
+          alert("解析错误！");
+          setVideoInfo({ pic: "", title: "", img: "" });
+        } else setVideoInfo({ ...d.data });
       });
   };
 
