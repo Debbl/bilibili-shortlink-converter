@@ -1,33 +1,24 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { Icon } from "@iconify/react";
-import { useMemo, useState } from "react";
-import { getCoverAction } from "~/actions/getCoverAction";
 import { closeIcon } from "~/assets/icons";
+import { useGetCoverStore } from "~/store";
 
 const GetCover = () => {
-  const [videoUrl, setVideoUrl] = useState(
-    "https://www.bilibili.com/video/BV16X4y1H7LR/?vd_source=846e45e6e150f0469fe98e948cf11679"
-  );
-  const [videoInfo, setVideoInfo] = useState({
-    pic: "",
-    title: "",
-    img: "",
-  });
-
-  // get BV* from vid by re
-  const vid = useMemo(() => /\/(BV\w+)\\?/.exec(videoUrl)?.[1], [videoUrl]);
-
-  const handleClick = () => {
-    vid &&
-      getCoverAction(vid).then((d) => {
-        if (!d) {
-          // eslint-disable-next-line no-alert
-          alert("解析错误！");
-          setVideoInfo({ pic: "", title: "", img: "" });
-        } else setVideoInfo({ ...d.data });
-      });
-  };
+  const [{ videoUrl, videoInfo }, { setVideoUrl, getCover, getVid }] =
+    useGetCoverStore((s) => [
+      {
+        videoUrl: s.videoUrl,
+        videoInfo: s.videoInfo,
+      },
+      {
+        getVid: s.getVid,
+        setVideoUrl: s.setVideoUrl,
+        setVideoInfo: s.setVideoInfo,
+        getCover: s.getCover,
+      },
+    ]);
+  const vid = getVid();
 
   return (
     <main className="flex justify-center">
@@ -52,7 +43,7 @@ const GetCover = () => {
             )}
           </div>
           <button
-            onClick={() => handleClick()}
+            onClick={() => getCover()}
             disabled={!videoUrl}
             className="btn"
           >

@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { getCoverAction } from "~/actions/getCoverAction";
 import { getShortLinkAction } from "~/actions/getShortLinkAction";
 
 interface GetShortUrlStore {
@@ -9,6 +10,23 @@ interface GetShortUrlStore {
   setIsCopy: (isCopy: boolean) => void;
   setUrl: (url: string) => void;
   setShortUrl: (shortUrl: string) => void;
+}
+
+interface GetCoverStore {
+  videoUrl: string;
+  videoInfo: {
+    pic: string;
+    title: string;
+    img: string;
+  };
+  setVideoUrl: (videoUrl: string) => void;
+  setVideoInfo: (videoInfo: {
+    pic: string;
+    title: string;
+    img: string;
+  }) => void;
+  getCover: () => void;
+  getVid: () => string | undefined;
 }
 
 const useGetShortUrlStore = create<GetShortUrlStore>()((set, get) => ({
@@ -34,4 +52,31 @@ const useGetShortUrlStore = create<GetShortUrlStore>()((set, get) => ({
   },
 }));
 
-export { useGetShortUrlStore };
+const useGetCoverStore = create<GetCoverStore>()((set, get) => {
+  return {
+    getVid: () => /\/(BV\w+)\\?/.exec(get()?.videoUrl)?.[1],
+    videoUrl:
+      "https://www.bilibili.com/video/BV16X4y1H7LR/?vd_source=846e45e6e150f0469fe98e948cf11679",
+    videoInfo: {
+      pic: "",
+      title: "",
+      img: "",
+    },
+    setVideoUrl: (videoUrl: string) => set({ videoUrl }),
+    setVideoInfo: (videoInfo: { pic: string; title: string; img: string }) =>
+      set({ videoInfo }),
+    getCover: () => {
+      const vid = get().getVid();
+      vid &&
+        getCoverAction(vid).then((d) => {
+          if (!d) {
+            // eslint-disable-next-line no-alert
+            alert("解析错误！");
+            set({ videoInfo: { pic: "", title: "", img: "" } });
+          } else set({ videoInfo: { ...d.data } });
+        });
+    },
+  };
+});
+
+export { useGetShortUrlStore, useGetCoverStore };
