@@ -26,7 +26,9 @@ interface GetCoverStore {
     img: string;
   }) => void;
   getCover: () => void;
-  getVid: () => string | undefined;
+  computed: {
+    vid: string | undefined;
+  };
 }
 
 const useGetShortUrlStore = create<GetShortUrlStore>()((set, get) => ({
@@ -53,7 +55,6 @@ const useGetShortUrlStore = create<GetShortUrlStore>()((set, get) => ({
 }));
 
 const useGetCoverStore = create<GetCoverStore>()((set, get) => ({
-  getVid: () => /\/(BV\w+)\\?/.exec(get()?.videoUrl)?.[1],
   videoUrl:
     "https://www.bilibili.com/video/BV16X4y1H7LR/?vd_source=846e45e6e150f0469fe98e948cf11679",
   videoInfo: {
@@ -61,11 +62,16 @@ const useGetCoverStore = create<GetCoverStore>()((set, get) => ({
     title: "",
     img: "",
   },
+  computed: {
+    get vid() {
+      return /\/(BV\w+)\\?/.exec(get()?.videoUrl)?.[1];
+    },
+  },
   setVideoUrl: (videoUrl: string) => set({ videoUrl }),
   setVideoInfo: (videoInfo: { pic: string; title: string; img: string }) =>
     set({ videoInfo }),
   getCover: () => {
-    const vid = get().getVid();
+    const vid = get().computed.vid;
     vid &&
       getCoverAction(vid).then((d) => {
         if (!d) {

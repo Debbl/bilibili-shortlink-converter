@@ -5,20 +5,19 @@ import { closeIcon } from "~/assets/icons";
 import { useGetCoverStore } from "~/store";
 
 const GetCover = () => {
-  const [{ videoUrl, videoInfo }, { setVideoUrl, getCover, getVid }] =
+  const [{ vid, videoUrl, videoInfo }, { setVideoUrl, getCover }] =
     useGetCoverStore((s) => [
       {
+        vid: s.computed.vid,
         videoUrl: s.videoUrl,
         videoInfo: s.videoInfo,
       },
       {
-        getVid: s.getVid,
         setVideoUrl: s.setVideoUrl,
         setVideoInfo: s.setVideoInfo,
         getCover: s.getCover,
       },
     ]);
-  const vid = getVid();
 
   return (
     <main className="flex justify-center">
