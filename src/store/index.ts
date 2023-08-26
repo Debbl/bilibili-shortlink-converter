@@ -27,9 +27,7 @@ interface GetCoverStore {
     img: string;
   }) => void;
   getCover: () => void;
-  computed: {
-    vid: string | undefined;
-  };
+  getVid: () => string | undefined;
 }
 
 const useGetShortUrlStore = create<GetShortUrlStore>()(
@@ -75,10 +73,8 @@ const useGetCoverStore = create<GetCoverStore>()(
           title: "",
           img: "",
         },
-        computed: {
-          get vid() {
-            return /\/(BV\w+)\\?/.exec(get()?.videoUrl)?.[1];
-          },
+        getVid: () => {
+          return /\/(BV\w+)\\?/.exec(get()?.videoUrl)?.[1];
         },
         setVideoUrl: (videoUrl: string) => set({ videoUrl }),
         setVideoInfo: (videoInfo: {
@@ -87,7 +83,7 @@ const useGetCoverStore = create<GetCoverStore>()(
           img: string;
         }) => set({ videoInfo }),
         getCover: () => {
-          const vid = get().computed.vid;
+          const vid = get().getVid();
           vid &&
             getCoverAction(vid).then((d) => {
               if (!d) {

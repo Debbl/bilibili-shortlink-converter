@@ -8,7 +8,7 @@ const GetCover = () => {
   const [{ vid, videoUrl, videoInfo }, { setVideoUrl, getCover }] =
     useGetCoverStore((s) => [
       {
-        vid: s.computed.vid,
+        vid: s.getVid(),
         videoUrl: s.videoUrl,
         videoInfo: s.videoInfo,
       },
