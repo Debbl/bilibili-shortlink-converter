@@ -27,7 +27,16 @@ const GetCover = () => {
         <div className="flex gap-x-2">
           <div className="relative">
             <input
-              className="h-12 w-[48rem] resize-none rounded-md border-2 border-black p-2 align-middle outline-none"
+              className="
+              h-12 
+              w-[48rem]
+              resize-none
+              rounded-md
+              border-2
+              border-black
+              p-2
+              align-middle
+              outline-none"
               type="text"
               value={videoUrl}
               onChange={(e) => setVideoUrl(e.target.value)}
