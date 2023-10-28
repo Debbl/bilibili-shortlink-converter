@@ -18,20 +18,23 @@ async function getCoverAction(vid: string) {
     cache: "force-cache",
   });
 
-  const data = await res.json();
+  const data = (await res.json()) as {
+    code: number;
+    data: { title: string; pic: string };
+  };
   if (data.code !== 0) return;
 
   // get base64 from pic
-  const pic = data.data.pic as string;
+  const pic = data.data.pic;
 
-  const base64Data = await base64.encode(pic, { string: true });
+  const base64Data = (await base64.encode(pic, { string: true })).toString();
   const ext = pic.split(".").pop();
-  const base64DataImg = `data:image/${ext};base64,${base64Data}` as string;
+  const base64DataImg = `data:image/${ext};base64,${base64Data}`;
 
   return {
     data: {
       pic,
-      title: data.data.title as string,
+      title: data.data.title,
       img: base64DataImg,
     },
   };
