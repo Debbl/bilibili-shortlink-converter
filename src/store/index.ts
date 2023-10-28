@@ -57,9 +57,9 @@ const useGetShortUrlStore = create<GetShortUrlStore>()(
       }),
       {
         name: "bili-get-short-url-store",
-      }
-    )
-  )
+      },
+    ),
+  ),
 );
 
 const useGetCoverStore = create<GetCoverStore>()(
@@ -85,20 +85,23 @@ const useGetCoverStore = create<GetCoverStore>()(
         getCover: () => {
           const vid = get().getVid();
           vid &&
-            getCoverAction(vid).then((d) => {
-              if (!d) {
-                // eslint-disable-next-line no-alert
-                alert("解析错误！");
-                set({ videoInfo: { pic: "", title: "", img: "" } });
-              } else set({ videoInfo: { ...d.data } });
-            });
+            getCoverAction(vid)
+              .then((d) => {
+                if (!d) {
+                  // eslint-disable-next-line no-alert
+                  alert("解析错误！");
+                  set({ videoInfo: { pic: "", title: "", img: "" } });
+                } else set({ videoInfo: { ...d.data } });
+              })
+              // eslint-disable-next-line no-console
+              .catch(console.log);
         },
       }),
       {
         name: "bili-get-cover-store",
-      }
-    )
-  )
+      },
+    ),
+  ),
 );
 
 export { useGetShortUrlStore, useGetCoverStore };

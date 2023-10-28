@@ -17,12 +17,16 @@ export default function Home() {
   const handleCopyClick = () => {
     shortUrl && setIsCopy(true);
 
-    navigator.clipboard.writeText(shortUrl).then(() => {
-      const id = setTimeout(() => {
-        setIsCopy(false);
-        clearTimeout(id);
-      }, 1000);
-    });
+    navigator.clipboard
+      .writeText(shortUrl)
+      .then(() => {
+        const id = setTimeout(() => {
+          setIsCopy(false);
+          clearTimeout(id);
+        }, 1000);
+      })
+      // eslint-disable-next-line no-console
+      .catch(console.log);
   };
 
   return (
@@ -47,7 +51,13 @@ export default function Home() {
               />
             )}
           </div>
-          <button onClick={() => getShortUrl()} disabled={!url} className="btn">
+          <button
+            onClick={() => {
+              void getShortUrl();
+            }}
+            disabled={!url}
+            className="btn"
+          >
             获取短链接
           </button>
         </div>
